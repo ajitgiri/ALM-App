@@ -60,7 +60,14 @@ Create project : ng new ALM-App
 NOTE: This Application is getting data and services from  : E:\Workspaces\Spring-Boot-Applications\Spring-Boot-REST-Hibernate-Services
 
 <<<<<<<<  PUSH the Project to Git Hub  >>>>>>>>>
-
+Create the project in GitHub, without Create and initialize README file
+	Go to the project root folder and Right Clik and open: Git Bash here
+		<- git init
+		<- git remote add origin https://github.com/ajitgiri/angular-restaurant-app03.git
+		<- git remote -v :To check the permisions like (fetch/push)
+		<- git add . : To add all the files to the index to pushed them to remore repository
+		<- git commit -m "This is my initial Push to Repository"
+		<- git push origin master 
 <<<<<<<<  END			>>>>> >>>
 
 ## @@ %%% ^^^ %%% ###### =================
