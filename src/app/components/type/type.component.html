@@ -1,0 +1,108 @@
+<body ng-app="app">
+    <div class="container">
+        <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD Type</button> &nbsp;
+    
+      <!-- START Registration Form -->
+      <div class="jumbotron">
+        <div class="col-md-12">
+            <h2 class="text-center search-title">Search Type</h2>
+            <form  #frm='ngForm'>
+              <div class="form-group row">
+                <input type="hidden" name="id" id="id" [(ngModel)]="type.id" >
+                <label for="roleType" class="col-sm-2">Type Code:</label>
+                <input type="text" name="roleType" class="form-control col-sm-2" id="roleType" [ngModel]="type.roleType" >
+                
+                <label for="roleDesc" class=" col-sm-2">Type Name:</label>
+                <input  type="text" name="roleDesc" class="form-control col-sm-2" id="roleDesc" [ngModel]="type.roleDesc" >
+              </div>
+              <div class="form-group row buttum-search-row">
+                  <div class="form-group row  center col-sm-4"></div>
+                <div class="form-group row  center col-sm-6">
+                <input type="submit" value="Search" class="btn btn-success" (click)="searchType()" [disabled]='frm.invalid' />
+                &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+              </div>
+             </div>
+            </form>
+          </div>  
+        </div>  
+        <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START Type Details Data Table-->
+    <table class="table table-striped">
+      <thead>
+        <th>ID</th>
+        <th>roleCode</th>
+        <th>roleName</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of types">
+          <td>{{type.id}}</td>
+          <td>{{ type.roleType }}</td>
+          <td>{{ type.roleDesc }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,type)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteType(type)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- END Type Details Data Table-->
+    </div>
+    
+     <!-- START ADD Type Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Type</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="type.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Type Code:</label>
+            <input type="text" name="roleType" class="form-control col-sm-6" id="roleType" [(ngModel)]="type.roleType">
+            </div>
+            <div class="form-group row">
+            <label for="roleDesc" class="col-sm-4 col-rght-pad">Type Name:</label>
+            <input  type="text" name="roleDesc" class="form-control col-sm-6" id="roleDesc" [(ngModel)]="type.roleDesc">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createType()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END ADD Type Details Modal -->
+  
+    <!-- START EDIT Type Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Type</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="type.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Type Code:</label>
+            <input type="text" name="roleType" class="form-control col-sm-6" id="roleType" [(ngModel)]="type.roleType" >
+            </div>
+            <div class="form-group row">
+            <label for="roleDesc" class="col-sm-4 col-rght-pad">Type Name:</label>
+            <input  type="text" name="roleDesc" class="form-control col-sm-6" id="roleDesc" [(ngModel)]="type.roleDesc" >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateType()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END EDIT Type Details Modal -->
+  
+    </body>

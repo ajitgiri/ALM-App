@@ -1,0 +1,108 @@
+<body ng-app="app">
+    <div class="container">
+        <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD Service Provider</button> &nbsp;
+    
+      <!-- START Registration Form -->
+      <div class="jumbotron">
+        <div class="col-md-12">
+            <h2 class="text-center search-title">Search Service Provider</h2>
+            <form  #frm='ngForm'>
+              <div class="form-group row">
+                <input type="hidden" name="id" id="id" [(ngModel)]="serviceProvider.id" >
+                <label for="providerName" class="col-sm-2">Provider Name:</label>
+                <input type="text" name="providerName" class="form-control col-sm-2" id="providerName" [(ngModel)]="serviceProvider.providerName" >
+                
+                <label for="owner" class=" col-sm-2">Owner :</label>
+                <input  type="text" name="owner" class="form-control col-sm-2" id="owner" [(ngModel)]="serviceProvider.owner" >
+              </div>
+              <div class="form-group row buttum-search-row">
+                  <div class="form-group row  center col-sm-4"></div>
+                <div class="form-group row  center col-sm-6">
+                <input type="submit" value="Search" class="btn btn-success" (click)="searchServiceProvider()" [disabled]='frm.invalid' />
+                &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+              </div>
+             </div>
+            </form>
+          </div>  
+        </div>  
+        <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START Team Details Data Table-->
+    <table class="table table-striped">
+      <thead>
+        <th>ID</th>
+        <th>Provider Name</th>
+        <th>Provider Owner</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let svcProvider of serviceProviders">
+          <td>{{svcProvider.id}}</td>
+          <td>{{svcProvider.providerName}}</td>
+          <td>{{svcProvider.owner}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,svcProvider)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteServiceProvider(svcProvider)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- END Team Details Data Table-->
+    </div>
+    
+     <!-- START ADD Team Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Service Provider</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="serviceProvider.id" >
+            <label for="providerName" class="col-sm-4 col-rght-pad">Provider Name:</label>
+            <input type="text" name="providerName" class="form-control col-sm-6" id="providerName" [(ngModel)]="serviceProvider.providerName">
+            </div>
+            <div class="form-group row">
+            <label for="owner" class="col-sm-4 col-rght-pad">Owner :</label>
+            <input  type="text" name="owner" class="form-control col-sm-6" id="owner" [(ngModel)]="serviceProvider.owner">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createServiceProvider()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END ADD Team Details Modal -->
+  
+    <!-- START EDIT Team Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Service Provider</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="serviceProvider.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Provider Name:</label>
+            <input type="text" name="providerName" class="form-control col-sm-6" id="providerName" [(ngModel)]="serviceProvider.providerName" >
+            </div>
+            <div class="form-group row">
+            <label for="owner" class="col-sm-4 col-rght-pad">Owner :</label>
+            <input  type="text" name="owner" class="form-control col-sm-6" id="owner" [(ngModel)]="serviceProvider.owner" >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateServiceProvider()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END EDIT Team Details Modal -->
+  
+    </body> 

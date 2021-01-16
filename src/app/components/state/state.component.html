@@ -1,0 +1,135 @@
+<body ng-app="app">
+    <div class="container">
+      <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD State</button> &nbsp;
+   
+      <!-- START Registration Form -->
+      <div class="jumbotron">
+        <div class="col-md-12">
+            <h2 class="text-center search-title">Search State</h2>
+            <form  #stateRegForm='ngForm'>
+              <div class="form-group row">
+                <label for="text" class="col-sm-2">Select Country:</label>
+                <select class="col-sm-2 form-control" name="country" [ngModel]="state.country.id">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let countryOBJ of countrys" value={{countryOBJ.id}}>
+                      {{countryOBJ.countryName}}
+                  </option>
+              </select>
+                  <label for="stateCode" class=" col-sm-2">State Code:</label>
+                  <input  type="text" name="stateCode" class="form-control col-sm-2" id="stateCode" [ngModel]="state.stateCode" >
+                  <label for="stateName" class=" col-sm-2">State Name:</label>
+                  <input  type="text" name="stateName" class="form-control col-sm-2" id="stateName" [ngModel]="state.stateName" >
+              </div>
+              <div class="form-group row ">
+                <div class="form-group row  center col-sm-4"></div>
+                <div class="form-group row  center col-sm-6">
+                <input type="submit" value="Search" class="btn btn-success" (click)="searchState()" [disabled]='stateRegForm.invalid' />
+                &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+                </div>
+             </div>
+            </form>
+          </div>  
+        </div>  
+        <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START State Details Data Table -->
+    <table class="table table-striped">
+      <thead>
+        <th>SL No.</th>
+        <th>countryName</th>
+        <th>State Id </th>
+        <th>State Code </th>
+        <th>State Name </th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let state of states" >
+          <td></td>
+          <td>{{state.country.countryName}} </td>
+          <td>{{state.id}}</td>
+          <td>{{state.stateCode}}</td>
+          <td>{{state.stateName}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,state)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteState(state)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <!-- END State Details Data Table -->
+    
+    </div>
+    
+     <!-- START ADD State Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New State</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <label for="text" class="col-sm-4 col-rght-pad">Select Country:</label>
+            <select class="col-sm-6 form-control" name="country" [(ngModel)]="state.country.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let countryOBJ of countrys" value={{countryOBJ.id}}>
+                    {{countryOBJ.countryName}}
+                </option>
+            </select>
+          </div>
+          <div class="form-group row">
+            <label for="text" class="col-sm-4 col-rght-pad">State Code:</label>
+            <input type="text" name="stateCode" class="form-control col-sm-6" id="stateCode" [(ngModel)]="state.stateCode" >
+          </div>
+          <div class="form-group row">
+            <label for="stateName" class="col-sm-4 col-rght-pad">State Name:</label>
+            <input  type="text" name="stateName" class="form-control col-sm-6" id="stateName" [(ngModel)]="state.stateName" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createState()">Save </button>
+      </div>
+    </ng-template>  
+    <!-- END ADD State Details Modal -->
+  
+    <!-- START EDIT Country Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit State</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="state.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Select Country:</label>
+            <select class="col-sm-6 form-control" name="country" [(ngModel)]="state.country.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let countryOBJ of countrys" value={{countryOBJ.id}}>
+                    {{countryOBJ.countryName}}
+                </option>
+            </select>
+          </div>
+          <div class="form-group row">
+            <label for="text" class="col-sm-4 col-rght-pad">State Code:</label>
+            <input type="text" name="stateCode" class="form-control col-sm-6" id="stateCode" [(ngModel)]="state.stateCode" >
+          </div>
+          <div class="form-group row">
+            <label for="stateName" class="col-sm-4 col-rght-pad">State Name:</label>
+            <input  type="text" name="stateName" class="form-control col-sm-6" id="stateName" [(ngModel)]="state.stateName" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateState()">Save </button>
+      </div>
+    </ng-template> 
+    <!-- END EDIT Country Details Modal -->
+  
+    </body>

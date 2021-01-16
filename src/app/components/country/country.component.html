@@ -1,0 +1,111 @@
+<body ng-app="app">
+    <div class="container">
+        <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD Country</button> &nbsp;
+    
+      <!-- START Registration Form -->
+      <div class="jumbotron">
+        <div class="col-md-12">
+            <h2 class="text-center search-title">Search country</h2>
+            <form  #frm='ngForm'>
+              <div class="form-group row">
+                <input type="hidden" name="id" id="id" [(ngModel)]="country.id" >
+                <label for="countryCode" class="col-sm-2">Country Code:</label>
+                <input type="text" name="countryCode" class="form-control col-sm-2" id="countryCode" [(ngModel)]="country.countryCode" >
+                
+                <label for="countryName" class=" col-sm-2">Country Name:</label>
+                <input  type="text" name="countryName" class="form-control col-sm-2" id="countryName" [(ngModel)]="country.countryName" >
+              </div>
+              <div class="form-group row buttum-search-row">
+                  <div class="form-group row  center col-sm-4"></div>
+                <div class="form-group row  center col-sm-6">
+                <input type="submit" value="Search" class="btn btn-success" (click)="searchCountry()" [disabled]='frm.invalid' />
+                &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+              </div>
+             </div>
+            </form>
+          </div>  
+        </div>  
+        <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START Country Details Data Table-->
+    <table class="table table-striped">
+      <thead>
+        <th>ID</th>
+        <th>countryCode</th>
+        <th>countryName</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let country of countrys">
+          <td>{{country.id}}</td>
+          <td>{{ country.countryCode }}</td>
+          <td>{{ country.countryName }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,country)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteCountry(country)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- END Country Details Data Table-->
+    
+    </div>
+    
+     <!-- START ADD Country Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Country</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="country.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Country Code:</label>
+            <input type="text" name="countryCode" class="form-control col-sm-6" id="countryCode" [(ngModel)]="country.countryCode" 
+                #countryCode ='ngModel' minlength="3" maxlength="5" required>
+            </div>
+            <div class="form-group row">
+            <label for="countryName" class="col-sm-4 col-rght-pad">Country Name:</label>
+            <input  type="text" name="countryName" class="form-control col-sm-6" id="countryName" [(ngModel)]="country.countryName" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createCountry()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END ADD Country Details Modal -->
+  
+    <!-- START EDIT Country Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Country</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <input type="hidden" name="id" id="id" [(ngModel)]="country.id" >
+            <label for="text" class="col-sm-4 col-rght-pad">Country Code:</label>
+            <input type="text" name="countryCode" class="form-control col-sm-6" id="countryCode" [(ngModel)]="country.countryCode" 
+                #countryCode ='ngModel' minlength="3" maxlength="5" required>
+            </div>
+            <div class="form-group row">
+            <label for="countryName" class="col-sm-4 col-rght-pad">Country Name:</label>
+            <input  type="text" name="countryName" class="form-control col-sm-6" id="countryName" [(ngModel)]="country.countryName" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateCountry()">Save </button>
+      </div>
+    </ng-template>
+    <!-- END EDIT Country Details Modal -->
+  
+    </body>

@@ -1,0 +1,197 @@
+<body ng-app="app">
+    <div class="container">
+      <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD Employee</button> &nbsp;
+   
+  <!-- START Search Form -->
+  <div class="jumbotron">
+    <div class="col-md-12">
+        <h2 class="text-center search-title">Search Employee</h2>
+        <form  #stateRegForm='ngForm'>
+          <div class="form-group row">
+            <label for="firstName" class="col-sm-2">First Name:</label>
+            <input  type="text" name="firstName" class="form-control col-sm-2" id="firstName" [ngModel]="employee.firstName" >
+            <label for="lastName" class="col-sm-2">Last Name:</label>
+            <input  type="text" name="lastName" class="form-control col-sm-2" id="lastName" [ngModel]="employee.lastName" >
+            <label for="emailId" class=" col-sm-2">Email Id:</label>
+            <input  type="text" name="emailId" class="form-control col-sm-2" id="emailId" [ngModel]="employee.emailId" >
+        </div>
+        <div class="form-group row">
+            <label for="type" class=" col-sm-2">Select Type:</label>
+            <select class="col-sm-2 form-control" name="type" [(ngModel)]="employee.department.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                    {{typeOBJ.roleDesc}}
+                </option>
+            </select>
+            <label for="team" class=" col-sm-2">Select Team:</label>
+            <select class="col-sm-2 form-control" name="team" [(ngModel)]="employee.team.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let teamObj of teams" value={{teamObj.id}}>
+                    {{teamObj.teamName}}
+                </option>
+            </select>
+            <label for="svcProvider" class=" col-sm-2">ServiceProvider:</label>
+            <select class="col-sm-2 form-control" name="svcProvider" [(ngModel)]="employee.svcProvider.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let svcProviderOBJ of svcProviders" value={{svcProviderOBJ.id}}>
+                    {{svcProviderOBJ.providerName}}
+                </option>
+            </select>
+          
+        </div>
+          <div class="form-group row ">
+            <div class="form-group row  center col-sm-4"></div>
+            <div class="form-group row  center col-sm-6">
+            <input type="submit" value="Search" class="btn btn-success" (click)="searchEmployee()" [disabled]='stateRegForm.invalid' />
+            &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+            </div>
+          </div>
+        </form>
+      </div>  
+    </div>  
+    <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START Employee Details Data Table -->
+    <table class="table table-striped">
+      <thead>
+        <th>SL No.</th>
+        <th> Name</th>
+        <th>Role</th>
+        <th>Team </th>
+        <th>Provider </th>
+      <!--  <th>Mobile no</th> -->
+        <th>Email Id</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees" >
+          <td></td>
+          <td>{{employee.firstName}} {{employee.lastName}}
+          <td>{{employee.department.roleDesc}}</td>
+          <td>{{employee.team.teamName}}</td>
+          <td>{{employee.svcProvider.providerName}}</td>
+        <!--  <td>{{employee.mobile}}</td> -->
+          <td>{{employee.emailId}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,employee)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <!-- END Employee Details Data Table -->
+    
+    </div>
+    
+     <!-- START ADD Employee Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Employee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+            <label for="firstName" class="col-sm-2">First Name:</label>
+            <input  type="text" name="firstName" class="form-control col-sm-4" id="firstNameD" [(ngModel)]="employee.firstName" >
+            <label for="lastName" class="col-sm-2">Last Name:</label>
+            <input  type="text" name="lastName" class="form-control col-sm-4" id="lastNameD" [(ngModel)]="employee.lastName" >
+          </div>
+          <div class="form-group row">
+            <label for="emailId" class=" col-sm-2">Email Id:</label>
+            <input  type="text" name="emailId" class="form-control col-sm-4" id="emailId" [(ngModel)]="employee.emailId" >
+            <label for="text" class="col-sm-2 col-rght-pad">Select Role:</label>
+            <select class="col-sm-4 form-control" name="department" [(ngModel)]="employee.department.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                    {{typeOBJ.roleDesc}}
+                </option>
+            </select>
+          </div>
+          <div class="form-group row">
+              <label for="team" class=" col-sm-2">Select Team:</label>
+              <select class="col-sm-4 form-control" name="team" [(ngModel)]="employee.team.id">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let teamObj of teams" value={{teamObj.id}}>
+                      {{teamObj.teamName}}
+                  </option>
+              </select>
+              <label for="svcProvider" class=" col-sm-2">Select Provider:</label>
+              <select class="col-sm-4 form-control" name="svcProvider" [(ngModel)]="employee.svcProvider.id">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let svcProviderOBJ of svcProviders" value={{svcProviderOBJ.id}}>
+                      {{svcProviderOBJ.providerName}}
+                  </option>
+              </select>
+          </div>
+          <div class="form-group row">
+            <label for="mobile" class="col-sm-2 col-rght-pad">Mobile No:</label>
+            <input  type="text" name="mobile" class="form-control col-sm-4" id="mobile" [(ngModel)]="employee.mobile">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createEmployee()">Save </button>
+      </div>
+    </ng-template>  
+    <!-- END ADD Employee Details Modal -->
+  
+    <!-- START EDIT Employee Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Employee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form  #frm='ngForm'>
+            <div class="form-group row">
+              <label for="firstName" class="col-sm-2">First Name:</label>
+              <input  type="text" name="firstName" class="form-control col-sm-4" id="firstName" [(ngModel)]="employeeEdit.firstName" >
+              <label for="lastName" class="col-sm-2">Last Name:</label>
+              <input  type="text" name="lastName" class="form-control col-sm-4" id="lastName" [(ngModel)]="employeeEdit.lastName" >
+            </div>
+            <div class="form-group row">
+              <label for="emailId" class=" col-sm-2">Email Id:</label>
+              <input  type="text" name="emailId" class="form-control col-sm-4" id="emailId" [(ngModel)]="employeeEdit.emailId" >
+              <label for="type" class="col-sm-2 col-rght-pad">Select Role:</label>
+              <select class="col-sm-4 form-control" name="type" [(ngModel)]="employeeEdit.department.id">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                      {{typeOBJ.roleDesc}}
+                  </option>
+              </select>
+            </div>
+            <div class="form-group row">
+                <label for="team" class=" col-sm-2">Select Team:</label>
+                <select class="col-sm-4 form-control" name="team" [(ngModel)]="employeeEdit.team.id" >
+                    <option value="0">--All--</option>
+                    <option *ngFor="let teamObj of teams" value={{teamObj.id}}>
+                        {{teamObj.teamName}}
+                    </option>
+                </select>
+                <label for="svcProvider" class=" col-sm-2">Select Provider:</label>
+                <select class="col-sm-4 form-control" name="svcProvider" [(ngModel)]="employeeEdit.svcProvider.id" >
+                    <option value="0">--All--</option>
+                    <option *ngFor="let svcProviderOBJ of svcProviders" value={{svcProviderOBJ.id}}>
+                        {{svcProviderOBJ.providerName}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group row">
+              <label for="mobile" class="col-sm-2 col-rght-pad">Mobile No:</label>
+              <input  type="text" name="mobile" class="form-control col-sm-4" id="mobile" [(ngModel)]="employeeEdit.mobile" required>
+            </div>
+          </form>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateEmployee()">Save </button>
+      </div>
+    </ng-template> 
+    <!-- END EDIT Employee Details Modal -->
+  
+    </body>

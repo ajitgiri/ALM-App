@@ -1,0 +1,231 @@
+<body ng-app="app">
+    <div class="container">
+      <button class="btn btn-lg btn-outline-primary" data-toggle="modal" (click)="open(AddContent)">ADD Leave</button> &nbsp;
+   
+  <!-- START Search Form -->
+  <div class="jumbotron">
+    <div class="col-md-12">
+        <h2 class="text-center search-title">Search Leave</h2>
+        <form  #stateRegForm='ngForm'>
+          <div class="form-group row">
+            <label for="employee" class="col-sm-2">Employee:</label>
+            <select class="col-sm-2 form-control" name="employee" [(ngModel)]="leave.empId.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let employeeOBJ of employees" value={{employeeOBJ.id}}>
+                    {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                </option>
+            </select>
+            <label for="type" class="col-sm-2">Type:</label>
+            <select class="col-sm-2 form-control" name="type" [(ngModel)]="leave.leaveType.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                    {{typeOBJ.roleDesc}}
+                </option>
+            </select>
+            <label for="approver" class=" col-sm-2">Approvar:</label>
+            <select class="col-sm-2 form-control" name="approver" [(ngModel)]="leave.approver.id">
+                <option value="0">--All--</option>
+                <option *ngFor="let employeeOBJ of managers" value={{employeeOBJ.id}}>
+                    {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="status" class=" col-sm-2">Status:</label>
+            <input  type="text" name="status" class="form-control col-sm-2" id="status" [ngModel]="leave.status" >
+        </div>
+          <div class="form-group row ">
+            <div class="form-group row  center col-sm-4"></div>
+            <div class="form-group row  center col-sm-6">
+            <input type="submit" value="Search" class="btn btn-success" (click)="searchLeave()" [disabled]='stateRegForm.invalid' />
+            &nbsp; &nbsp;<input type="reset" value="Clear" class="btn btn-primary" />
+            </div>
+          </div>
+        </form>
+      </div>  
+    </div>  
+    <!-- END Registration Form -->  
+    <br>
+  
+    <!-- START Leave Details Data Table -->
+    <table class="table table-striped">
+      <thead>
+        <th>SL No.</th>
+        <th>Name</th>
+        <th>Leave Type </th>
+        <th>Approver </th>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>Days </th>
+        <th>staus</th>
+        <th>Reason</th>
+        <th>Backup </th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of leaves" >
+          <td></td>
+          <td>{{leave.empId.firstName}} {{leave.empId.lastName}}</td>
+          <td>{{leave.leaveType.roleDesc}}</td>
+          <td>{{leave.approver.firstName}} {{leave.approver.lastName}}</td>
+          <td>{{leave.lvFromDate}}</td>
+          <td>{{leave.lvFromDate}}</td>
+          <td>{{leave.noOfDays}}</td>
+          <td>{{leave.status}}</td>
+          <td>{{leave.empId.firstName}} {{leave.empId.lastName}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(EditContent,leave)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteLeave(leave)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <!-- END Leave Details Data Table -->
+    
+    </div>
+    
+     <!-- START ADD Leave Details Modal -->
+    <ng-template #AddContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Leave</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mr-5 ml-5">
+        <form  #frm='ngForm'>
+          <div class="form-group row">
+                <label for="team" class="col-sm-2">Team:</label>
+                <select class="col-sm-4 form-control" name="team" [(ngModel)]="leave.team.id" (change)="changeTeam($event.target.value)">
+                    <option value="0">--All--</option>
+                    <option *ngFor="let teamOBJ of teams" value={{teamOBJ.id}}>
+                        {{teamOBJ.teamName}}
+                    </option>
+                </select>
+              <label for="employee" class="col-sm-2">Employee:</label>
+              <select class="col-sm-4 form-control" name="employee" [(ngModel)]="leave.empId.id" (change)="changeEmployee($event.target.value)">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let employeeOBJ of employeesOfTeam" value={{employeeOBJ.id}}>
+                      {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                  </option>
+              </select>
+          </div>
+          <div class="form-group row">
+                <label for="type" class="col-sm-2">Leave Type:</label>
+                <select class="col-sm-4 form-control" name="type" [(ngModel)]="leave.leaveType.id">
+                    <option value="0">--All--</option>
+                    <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                        {{typeOBJ.roleDesc}}
+                    </option>
+                </select>
+                
+              <label for="approver" class=" col-sm-2">Approvar:</label>
+              <select class="col-sm-4 form-control" name="approver" [(ngModel)]="leave.approver.id">
+                  <option value="0">--All--</option>
+                  <option *ngFor="let employeeOBJ of managers" value={{employeeOBJ.id}}>
+                      {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                  </option>
+              </select>
+          </div>
+          <div class="form-group row">
+                <label for="backupResource" class=" col-sm-2">Back Up:</label>
+                <select class="col-sm-4 form-control" name="backupResource" [(ngModel)]="leave.backupResource.id">
+                    <option value="0">--All--</option>
+                    <option *ngFor="let employeeOBJ of backupResources" value={{employeeOBJ.id}}>
+                        {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                    </option>
+                </select>
+              <label for="lvFromDate" class=" col-sm-2">From Date:</label>
+              <div class="input-group col-sm-4 pl-0 pr-0">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="leave.lvFromDate" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+          
+             <!-- <input  type="text" name="lvtoDate" class="form-control col-sm-4" id="lvtoDate" [ngModel]="leave.lvtoDate" > -->
+          </div>
+          <div class="form-group row">
+                 <!-- <input  type="text" name="lvFromDate" class="form-control col-sm-4" id="lvFromDate" [ngModel]="leave.lvFromDate" > -->
+                 <label for="lvtoDate" class=" col-sm-2">To Date:</label>
+                 <div class="input-group col-sm-4 pl-0 pr-0">
+                   <input class="form-control" placeholder="yyyy-mm-dd"
+                          name="dp2" [(ngModel)]="leave.lvtoDate" ngbDatepicker #c="ngbDatepicker">
+                   <div class="input-group-append">
+                       <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="button"></button>
+                 </div>
+                 </div>
+              <label for="noOfDays" class=" col-sm-2">Total Days:</label>
+              <input  type="text" name="noOfDays" class="form-control col-sm-4" id="noOfDays" [ngModel]="leave.noOfDays" >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createLeave()">Save </button>
+      </div>
+    </ng-template>  
+    <!-- END ADD Leave Details Modal -->
+  
+    <!-- START EDIT Leave Details Modal -->
+    <ng-template #EditContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Leave</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form  #frm='ngForm'>
+              <div class="form-group row">
+                  <label for="employee" class="col-sm-2">Employee:</label>
+                  <select class="col-sm-4 form-control" name="employee" [(ngModel)]="leave.empId.id">
+                      <option value="0">--All--</option>
+                      <option *ngFor="let employeeOBJ of employees" value={{employeeOBJ.id}}>
+                          {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                      </option>
+                  </select>
+                  <label for="type" class="col-sm-2">Type:</label>
+                  <select class="col-sm-4 form-control" name="type" [(ngModel)]="leave.leaveType.id">
+                      <option value="0">--All--</option>
+                      <option *ngFor="let typeOBJ of types" value={{typeOBJ.id}}>
+                          {{typeOBJ.roleDesc}}
+                      </option>
+                  </select>
+                  
+              </div>
+              <div class="form-group row">
+                  <label for="approver" class=" col-sm-2">Approvar:</label>
+                  <select class="col-sm-4 form-control" name="approver" [(ngModel)]="leave.approver.id">
+                      <option value="0">--All--</option>
+                      <option *ngFor="let employeeOBJ of managers " value={{employeeOBJ.id}}>
+                          {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                      </option>
+                  </select>
+                  <label for="backupResource" class=" col-sm-2">Back Up:</label>
+                  <select class="col-sm-4 form-control" name="backupResource" [(ngModel)]="leave.backupResource.id">
+                      <option value="0">--All--</option>
+                      <option *ngFor="let employeeOBJ of backupResources" value={{employeeOBJ.id}}>
+                          {{employeeOBJ.firstName}}&nbsp;{{employeeOBJ.lastName}}
+                      </option>
+                  </select>
+              </div>
+              <div class="form-group row">
+                  <label for="lvFromDate" class=" col-sm-2">From Date:</label>
+                  <input  type="text" name="lvFromDate" class="form-control col-sm-4" id="lvFromDate" [ngModel]="leave.lvFromDate" >
+                  <label for="lvtoDate" class=" col-sm-2">To Date:</label>
+                  <input  type="text" name="lvtoDate" class="form-control col-sm-4" id="lvtoDate" [ngModel]="leave.lvtoDate" >
+              </div>
+              <div class="form-group row">
+                  <label for="noOfDays" class=" col-sm-2">Total Days:</label>
+                  <input  type="text" name="noOfDays" class="form-control col-sm-4" id="noOfDays" [ngModel]="leave.noOfDays" >
+              </div>
+            </form>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateLeave()">Save </button>
+      </div>
+    </ng-template> 
+    <!-- END EDIT Leave Details Modal -->
+  
+    </body>
