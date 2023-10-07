@@ -29,24 +29,23 @@ Create project : ng new ALM-App
 			Jquery 		: npm install jquery (Bootstrap has dependency on Jquery and Popper js) 
 			popper 		: npm install popper.js --save
 			Bootstrap 	: npm install bootstrap  [Used for the Multi Level Nave bar creation and used JQuery and Popper JS for Bootstrap]
-			ng-Bootstrap: npm install --save @ng-bootstrap/ng-bootstrap (Modal and )
-			Change port :  by adding a port option to my project's angular.json
-					Example 
-						"projects": {
-							"my-project": {
-								"architect": {
-									"serve": {
-										"options": {
-											"port": 4201
-										}
+			ng-Bootstrap: npm install --save @ng-bootstrap/ng-bootstrap (Modal and Popup)
+			Change port : by adding a port option to my project's angular.json
+				Example 
+					"projects": {
+						"my-project": {
+							"architect": {
+								"serve": {
+									"options": {
+										"port": 4201
 									}
 								}
 							}
-							
-							$$**##   "port": 4201  $$**##
+						}
+						
+				$$**##   "port": 4201  $$**##
 			
-
-	Add style and Scripts : angular.js
+	Add Style and Scripts: angular.json
 							"styles": [
 								  "node_modules/bootstrap/dist/css/bootstrap.min.css",
 								  "src/styles.css"
@@ -68,6 +67,10 @@ Create the project in GitHub, without Create and initialize README file
 		<- git add . : To add all the files to the index to pushed them to remore repository
 		<- git commit -m "This is my initial Push to Repository"
 		<- git push origin master 
-<<<<<<<<  END			>>>>> >>>
+		
+
+<<<  <<<<<  END  >>>>>  >>>
+
+*** Note :  Spring-Boot-REST-Hibernate-Services -> SERVICE IS USED AS BACKEND
 
 ## @@ %%% ^^^ %%% ###### =================

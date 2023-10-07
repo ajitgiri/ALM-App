@@ -31,13 +31,15 @@
     <!-- START Team Details Data Table-->
     <table class="table table-striped">
       <thead>
+        <th>SL No.</th>
         <th>ID</th>
         <th>Team Name</th>
         <th>Team Description</th>
         <th>Actions</th>
       </thead>
       <tbody>
-        <tr *ngFor="let team of teams">
+        <tr *ngFor="let team of teams; let i = index" >
+          <td>{{i+1}}</td>
           <td>{{team.id}}</td>
           <td>{{ team.teamName }}</td>
           <td>{{ team.teamDesc }}</td>

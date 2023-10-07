@@ -10,10 +10,10 @@
               <div class="form-group row">
                 <input type="hidden" name="id" id="id" [(ngModel)]="country.id" >
                 <label for="countryCode" class="col-sm-2">Country Code:</label>
-                <input type="text" name="countryCode" class="form-control col-sm-2" id="countryCode" [(ngModel)]="country.countryCode" >
+                <input type="text" name="countryCode" class="form-control col-sm-2" id="countryCode" [(ngModel)]="country.countryCode" required>
                 
                 <label for="countryName" class=" col-sm-2">Country Name:</label>
-                <input  type="text" name="countryName" class="form-control col-sm-2" id="countryName" [(ngModel)]="country.countryName" >
+                <input  type="text" name="countryName" class="form-control col-sm-2" id="countryName" [(ngModel)]="country.countryName" required>
               </div>
               <div class="form-group row buttum-search-row">
                   <div class="form-group row  center col-sm-4"></div>
@@ -31,13 +31,15 @@
     <!-- START Country Details Data Table-->
     <table class="table table-striped">
       <thead>
-        <th>ID</th>
+        <th>Sl No.</th>
+        <th>Country ID</th>
         <th>countryCode</th>
         <th>countryName</th>
         <th>Actions</th>
       </thead>
       <tbody>
-        <tr *ngFor="let country of countrys">
+        <tr *ngFor="let country of countrys; let i = index" >
+          <td>{{i+1}}</td>
           <td>{{country.id}}</td>
           <td>{{ country.countryCode }}</td>
           <td>{{ country.countryName }}</td>

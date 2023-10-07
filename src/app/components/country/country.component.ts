@@ -38,7 +38,7 @@ export class CountryComponent implements OnInit {
             //alert("Country created successfully.");
             this.modalService.dismissAll();
             this.getCountryDetails(); 
-             
+            
           });
     };
   
@@ -71,7 +71,10 @@ export class CountryComponent implements OnInit {
        (data) =>{ 
          console.log(data);
          this.countrys = data 
-       },(error)=>{console.log(error);
+       },(error)=>{
+         console.log("ERROR During Loading Country Details :: ", error);
+         console.log("ERROR Message :: ", error.message);
+         console.log("ERROR STATUS CODE:", error.status);
          }
        )
    }

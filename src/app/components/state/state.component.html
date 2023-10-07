@@ -44,8 +44,8 @@
         <th>Actions</th>
       </thead>
       <tbody>
-        <tr *ngFor="let state of states" >
-          <td></td>
+        <tr *ngFor="let state of states; let i = index" >
+          <td>{{i+1}}</td>
           <td>{{state.country.countryName}} </td>
           <td>{{state.id}}</td>
           <td>{{state.stateCode}}</td>

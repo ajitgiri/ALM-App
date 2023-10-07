@@ -65,8 +65,8 @@
         <th>Actions</th>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of employees" >
-          <td></td>
+        <tr *ngFor="let employee of employees; let i = index" >
+          <td>{{i+1}}</td>
           <td>{{employee.firstName}} {{employee.lastName}}
           <td>{{employee.department.roleDesc}}</td>
           <td>{{employee.team.teamName}}</td>

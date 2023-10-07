@@ -31,13 +31,15 @@
     <!-- START Type Details Data Table-->
     <table class="table table-striped">
       <thead>
+        <th>Sl No.</th>
         <th>ID</th>
         <th>roleCode</th>
         <th>roleName</th>
         <th>Actions</th>
       </thead>
       <tbody>
-        <tr *ngFor="let type of types">
+        <tr *ngFor="let type of types; let i = index" >
+          <td>{{i+1}}</td>
           <td>{{type.id}}</td>
           <td>{{ type.roleType }}</td>
           <td>{{ type.roleDesc }}</td>
